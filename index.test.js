@@ -48,15 +48,20 @@ describe('[Exercise 1] trimProperties', () => {
     beforeEach(() => {
       counter = new utils.Counter(3); // each test must start with a fresh couter
     });
-    test.todo(
-      '[6] the FIRST CALL of counter.countDown returns the initial count'
-    );
-    test.todo(
-      '[7] the SECOND CALL of counter.countDown returns the initial count minus one'
-    );
-    test.todo(
-      '[8] the count eventually reaches zero but does not go below zero'
-    );
+    test('[6] the FIRST CALL of counter.countDown returns the initial count', () => {
+      expect(counter.countDown()).toBe(3);
+    });
+    test('[7] the SECOND CALL of counter.countDown returns the initial count minus one', () => {
+      expect(counter.countDown()).toBe(3);
+      expect(counter.countDown()).toBe(2);
+    });
+    test('[8] the count eventually reaches zero but does not go below zero', () => {
+      expect(counter.countDown()).toBe(3);
+      expect(counter.countDown()).toBe(2);
+      expect(counter.countDown()).toBe(1);
+      expect(counter.countDown()).toBe(0);
+      expect(counter.countDown()).toBe(0);
+    });
   });
 
   describe('[Exercise 5] Seasons', () => {
@@ -64,12 +69,29 @@ describe('[Exercise 1] trimProperties', () => {
     beforeEach(() => {
       seasons = new utils.Seasons(); // each test must start with fresh seasons
     });
-    test.todo('[9] the FIRST call of seasons.next returns "summer"');
-    test.todo('[10] the SECOND call of seasons.next returns "fall"');
-    test.todo('[11] the THIRD call of seasons.next returns "winter"');
-    test.todo('[12] the FOURTH call of seasons.next returns "spring"');
-    test.todo('[13] the FIFTH call of seasons.next returns again "summer"');
-    test.todo('[14] the 40th call of seasons.next returns "spring"');
+    test('[9] the FIRST call of seasons.next returns "summer"', () => {
+      expect(seasons.next()).toBe('summer');
+    });
+    test('[10] the SECOND call of seasons.next returns "fall"', () => {
+      expect(seasons.next()).toBe('summer');
+      expect(seasons.next()).toBe('fall');
+    });
+
+    test('[11] the THIRD call of seasons.next returns "winter"', () => {
+      expect(seasons.next()).toBe('summer');
+      expect(seasons.next()).toBe('fall');
+      expect(seasons.next()).toBe('winter');
+    });
+
+    test('[12] the FOURTH call of seasons.next returns "spring"', () => {
+      expect(seasons.next()).toBe('summer');
+      expect(seasons.next()).toBe('fall');
+      expect(seasons.next()).toBe('winter');
+      expect(seasons.next()).toBe('spring');
+    });
+
+    test('[13] the FIFTH call of seasons.next returns again "summer"');
+    test('[14] the 40th call of seasons.next returns "spring"');
   });
 
   describe('[Exercise 6] Car', () => {

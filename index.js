@@ -24,12 +24,9 @@ function findLargestInteger(integers) {
 }
 
 class Counter {
-  /**
-   * [Exercise 4A] Counter creates a counter
-   * @param {number} initialNumber - the initial state of the count
-   */
   constructor(initialNumber) {
-    // ✨ initialize whatever properties are needed
+    this.count = initialNumber;
+    this.baseline = false;
   }
 
   /**
@@ -45,9 +42,21 @@ class Counter {
    * counter.countDown() // returns 0
    */
   countDown() {
-    // ✨ implement
+    if (!this.baseline) {
+      this.baseline = true;
+      return this.count;
+    } else if (this.count === 0) {
+      return 0;
+    } else {
+      return (this.count -= 1);
+    }
   }
 }
+const counter = new Counter(3);
+console.log(counter.countDown());
+console.log(counter.countDown());
+console.log(counter.countDown());
+console.log(counter.countDown());
 
 class Seasons {
   /**
@@ -55,6 +64,13 @@ class Seasons {
    */
   constructor() {
     // ✨ initialize whatever properties are needed
+    this.seasons = {
+      summer: 0,
+      fall: 0,
+      winter: 0,
+      spring: 0,
+    };
+    this.list = Object.keys(this.seasons);
   }
 
   /**
@@ -70,7 +86,21 @@ class Seasons {
    * seasons.next() // returns "summer"
    */
   next() {
-    // ✨ implement
+    if (this.seasons.summer === 0) {
+      this.seasons.summer = 1;
+      return this.list[0];
+    }
+    for (const season in this.seasons) {
+      if (this.seasons[season] === 0) {
+        this.seasons[season] = 1;
+        return season;
+      } else if (this.seasons['summer'] === 1) {
+        this.seasons['summer'] += 1;
+        return 'summer';
+      } else {
+        return 'spring';
+      }
+    }
   }
 }
 
