@@ -1,46 +1,32 @@
-/**
- * [Exercise 1] trimProperties copies an object trimming its properties
- * @param {object} obj - an object with properties that are strings
- * @returns {object} - a copy of the object with strings trimmed
- *
- * EXAMPLE
- * trimProperties({ name: '  jane  ' }) // returns a new object { name: 'jane' }
- */
 function trimProperties(obj) {
-  // ✨ implement
+  const result = {};
+  for (let prop in obj) {
+    result[prop] = obj[prop].trim();
+  }
+  return result;
 }
 
-/**
- * [Exercise 2] trimPropertiesMutation trims in place the properties of an object
- * @param {object} obj - an object with properties that are strings
- * @returns {object} - the same object with strings trimmed
- *
- * EXAMPLE
- * trimPropertiesMutation({ name: '  jane  ' }) // returns the object mutated in place { name: 'jane' }
- */
 function trimPropertiesMutation(obj) {
-  // ✨ implement
+  for (let prop in obj) {
+    obj[prop] = obj[prop].trim();
+  }
+  return obj;
 }
 
-/**
- * [Exercise 3] findLargestInteger finds the largest integer in an array of objects { integer: 1 }
- * @param {object[]} integers - an array of objects
- * @returns {number} - the largest integer
- *
- * EXAMPLE
- * findLargestInteger([{ integer: 1 }, { integer: 3 }, { integer: 2 }]) // returns 3
- */
 function findLargestInteger(integers) {
-  // ✨ implement
+  let largest = integers[0];
+  Object.keys(integers).map((int) => {
+    if (integers[int].integer > largest.integer) {
+      largest = integers[int];
+    }
+  });
+  return largest.integer;
 }
 
 class Counter {
-  /**
-   * [Exercise 4A] Counter creates a counter
-   * @param {number} initialNumber - the initial state of the count
-   */
   constructor(initialNumber) {
-    // ✨ initialize whatever properties are needed
+    this.count = initialNumber;
+    this.baseline = false;
   }
 
   /**
@@ -56,9 +42,21 @@ class Counter {
    * counter.countDown() // returns 0
    */
   countDown() {
-    // ✨ implement
+    if (!this.baseline) {
+      this.baseline = true;
+      return this.count;
+    } else if (this.count === 0) {
+      return 0;
+    } else {
+      return (this.count -= 1);
+    }
   }
 }
+const counter = new Counter(3);
+console.log(counter.countDown());
+console.log(counter.countDown());
+console.log(counter.countDown());
+console.log(counter.countDown());
 
 class Seasons {
   /**
@@ -66,6 +64,8 @@ class Seasons {
    */
   constructor() {
     // ✨ initialize whatever properties are needed
+    this.seasons = ['summer', 'fall', 'winter', 'spring'];
+    this.currentSeason = 0;
   }
 
   /**
@@ -81,7 +81,13 @@ class Seasons {
    * seasons.next() // returns "summer"
    */
   next() {
-    // ✨ implement
+    const result = this.seasons[this.currentSeason];
+    if (this.currentSeason === 3) {
+      this.currentSeason = 0;
+    } else {
+      ++this.currentSeason;
+    }
+    return result;
   }
 }
 
@@ -93,9 +99,10 @@ class Car {
    * @param {number} mpg - miles the car can drive per gallon of gas
    */
   constructor(name, tankSize, mpg) {
-    this.odometer = 0 // car initilizes with zero miles
-    this.tank = tankSize // car initiazes full of gas
-    // ✨ initialize whatever other properties are needed
+    this.odometer = 0; // car initilizes with zero miles
+    this.tank = tankSize; // car initiazes full of gas
+    this.mpg = mpg;
+    this.tankSize = tankSize;
   }
 
   /**
@@ -112,7 +119,15 @@ class Car {
    * focus.drive(200) // returns 600 (ran out of gas after 100 miles)
    */
   drive(distance) {
-    // ✨ implement
+    const milesCanDrive = this.tank * this.mpg;
+    if (distance <= milesCanDrive) {
+      this.odometer = this.odometer + distance;
+      this.tank = this.tank - distance / this.mpg;
+    } else {
+      this.odometer = this.odometer + milesCanDrive;
+      this.tank = 0;
+    }
+    return this.odometer;
   }
 
   /**
@@ -127,7 +142,13 @@ class Car {
    * focus.refuel(99) // returns 600 (tank only holds 20)
    */
   refuel(gallons) {
-    // ✨ implement
+    const gallonsThatFit = this.tankSize - this.tank;
+    if (gallons <= gallonsThatFit) {
+      this.tank = this.tank + gallons;
+    } else {
+      this.tank = this.tankSize;
+    }
+    return this.tank * this.mpg;
   }
 }
 
@@ -150,8 +171,12 @@ class Car {
  *    // error.message is "number must be a number"
  * })
  */
-function isEvenNumberAsync(number) {
-  // ✨ implement
+
+async function isEvenNumberAsync(number) {
+  if (typeof number !== 'number' || isNaN(number)) {
+    throw new Error('number must be a number');
+  }
+  return number % 2 === 0 || false;
 }
 
 module.exports = {
@@ -162,4 +187,4 @@ module.exports = {
   Counter,
   Seasons,
   Car,
-}
+};
